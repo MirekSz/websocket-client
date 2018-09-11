@@ -9,16 +9,15 @@ import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandler;
 import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
 import org.springframework.util.concurrent.ListenableFuture;
-import org.springframework.web.socket.client.WebSocketClient;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
 import com.nibado.example.websocket.service.Request;
 
-public class ServiceClient {
+public class WebSocketClient {
 
 	public static void main(final String... argv) throws Exception, ExecutionException {
-		WebSocketClient webSocketClient = new StandardWebSocketClient();
+		StandardWebSocketClient webSocketClient = new StandardWebSocketClient();
 		WebSocketStompClient stompClient = new WebSocketStompClient(webSocketClient);
 		stompClient.setMessageConverter(new MappingJackson2MessageConverter());
 		stompClient.setTaskScheduler(new ConcurrentTaskScheduler());
