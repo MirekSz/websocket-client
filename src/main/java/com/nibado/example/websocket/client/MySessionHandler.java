@@ -1,36 +1,43 @@
+
 package com.nibado.example.websocket.client;
 
-import com.nibado.example.websocket.service.Greeting;
-import lombok.extern.slf4j.Slf4j;
+import java.lang.reflect.Type;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
 
-import java.lang.reflect.Type;
+import com.nibado.example.websocket.service.Response;
 
-@Slf4j
 public class MySessionHandler extends StompSessionHandlerAdapter {
-    @Override
-    public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
-        session.subscribe("/topic/greetings", this);
-        session.send("/app/hello", "{\"name\":\"Client\"}".getBytes());
 
-        log.info("New session: {}", session.getSessionId());
-    }
+	Logger log = LoggerFactory.getLogger(MySessionHandler.class);
 
-    @Override
-    public void handleException(StompSession session, StompCommand command, StompHeaders headers, byte[] payload, Throwable exception) {
-        exception.printStackTrace();
-    }
+	@Override
+	public void afterConnected(final StompSession session, final StompHeaders connectedHeaders) {
+		session.subscribe("/topic/greetings", this);
 
-    @Override
-    public Type getPayloadType(StompHeaders headers) {
-        return Greeting.class;
-    }
+		log.info("New session: {}", session.getSessionId());
+	}
 
-    @Override
-    public void handleFrame(StompHeaders headers, Object payload) {
-        log.info("Received: {}", ((Greeting) payload).getContent());
-    }
+	@Override
+	public void handleException(final StompSession session, final StompCommand command, final StompHeaders headers, final byte[] payload,
+			final Throwable exception) {
+		exception.printStackTrace();
+	}
+
+	@Override
+	public Type getPayloadType(final StompHeaders headers) {
+		return Response.class;
+	}
+
+	@Override
+	public void handleFrame(final StompHeaders headers, final Object payload) {
+		Long start = ((Response) payload).getStart();
+		long end = System.currentTimeMillis() - start;
+		System.out.println("Response time " + end);
+	}
 }
