@@ -15,22 +15,12 @@ public class RestClient {
 		asyncRestTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 		RestTemplate restTemplate = new RestTemplate();
 		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-
-		Response response = restTemplate
-				.postForEntity("http://127.0.0.1:8080/helloSync", new Request(System.currentTimeMillis()), Response.class).getBody();
-		long end = System.currentTimeMillis() - response.getStart();
-		System.out.println("Response time " + end);
-
-		response = restTemplate.postForEntity("http://127.0.0.1:8080/helloSync", new Request(System.currentTimeMillis()), Response.class)
-				.getBody();
-		end = System.currentTimeMillis() - response.getStart();
-		System.out.println("Response time " + end);
-
-		response = restTemplate.postForEntity("http://127.0.0.1:8080/helloSync", new Request(System.currentTimeMillis()), Response.class)
-				.getBody();
-		end = System.currentTimeMillis() - response.getStart();
-		System.out.println("Response time " + end);
-
+		for (int i = 0; i < 10000; i++) {
+			Response response = restTemplate
+					.postForEntity("http://127.0.0.1:8080/helloSync", new Request(System.currentTimeMillis()), Response.class).getBody();
+			long end = System.currentTimeMillis() - response.getStart();
+			System.out.println("Response time " + end);
+		}
 	}
 
 }
