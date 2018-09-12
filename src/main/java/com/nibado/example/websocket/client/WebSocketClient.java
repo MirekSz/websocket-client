@@ -31,7 +31,9 @@ public class WebSocketClient {
 		ListenableFuture<StompSession> connect = stompClient.connect(url, sessionHandler);
 		for (int i = 0; i < 10000; i++) {
 			connect.get().send("/app/hello", new Request(System.currentTimeMillis()));
+			Thread.sleep(10);
 		}
+		System.out.println(MySessionHandler.SUM);
 		new Scanner(System.in).nextLine();
 	}
 }

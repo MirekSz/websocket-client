@@ -18,14 +18,14 @@ public class WebSocketAndRestController {
 	@MessageMapping("/hello")
 	@SendTo("/topic/greetings")
 	public Response greeting(final Request message) throws Exception {
-		log.info("Received hello: {}", message.getStart());
+		// log.info("Received hello: {}", message.getStart());
 		return new Response(message.getStart());
 	}
 
 	@PostMapping("/helloSync")
 	@ResponseBody
 	public Response helloSync(@RequestBody final Request message) throws Exception {
-		log.info("Received hello: {}", message.getStart());
+		// log.info("Received hello: {}", message.getStart());
 		return new Response(message.getStart());
 	}
 }

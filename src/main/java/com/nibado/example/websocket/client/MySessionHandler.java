@@ -2,6 +2,7 @@
 package com.nibado.example.websocket.client;
 
 import java.lang.reflect.Type;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import com.nibado.example.websocket.service.Response;
 public class MySessionHandler extends StompSessionHandlerAdapter {
 
 	Logger log = LoggerFactory.getLogger(MySessionHandler.class);
+	public static AtomicLong SUM = new AtomicLong(0);
 
 	@Override
 	public void afterConnected(final StompSession session, final StompHeaders connectedHeaders) {
@@ -35,9 +37,10 @@ public class MySessionHandler extends StompSessionHandlerAdapter {
 	}
 
 	@Override
-	public void handleFrame(final StompHeaders headers, final Object payload) {
+	public synchronized void handleFrame(final StompHeaders headers, final Object payload) {
 		Long start = ((Response) payload).getStart();
 		long end = System.currentTimeMillis() - start;
-		System.out.println("Response time " + end);
+		// System.out.println("Response time " + end);
+		SUM.addAndGet(end);
 	}
 }
