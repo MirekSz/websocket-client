@@ -7,8 +7,11 @@
             </Pattern>
         </layout>
     </appender>
-
-    <root level="trace">
-        <appender-ref ref="STDOUT" />
+    <logger name="org.springframework.web.socket.sockjs" level="debug"
+		additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+    <root level="info">
+        <appender-ref ref="STDOUT"  />
     </root>
 </configuration>

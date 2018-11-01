@@ -19,10 +19,10 @@ public class RestClient {
 		asyncRestTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 		RestTemplate restTemplate = new RestTemplate();
 		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-		for (int i = 0; i < 10000; i++) {
-			Thread.sleep(10);
-			Response response = restTemplate
-					.postForEntity("http://127.0.0.1:8080/helloSync", new Request(System.currentTimeMillis()), Response.class).getBody();
+		for (int i = 0; i < 1000; i++) {
+			// Thread.sleep(10);
+			Response response = restTemplate.postForEntity("http://localhost:8080/rock/sumSync",
+					new Request(System.currentTimeMillis()), Response.class).getBody();
 			long end = System.currentTimeMillis() - response.getStart();
 			// System.out.println("Response time " + end);
 			SUM.addAndGet(end);

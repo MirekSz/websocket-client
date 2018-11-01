@@ -20,14 +20,14 @@ public class MySessionHandler extends StompSessionHandlerAdapter {
 
 	@Override
 	public void afterConnected(final StompSession session, final StompHeaders connectedHeaders) {
-		session.subscribe("/topic/greetings", this);
+		session.subscribe("/topic/sum", this);
 
 		log.info("New session: {}", session.getSessionId());
 	}
 
 	@Override
-	public void handleException(final StompSession session, final StompCommand command, final StompHeaders headers, final byte[] payload,
-			final Throwable exception) {
+	public void handleException(final StompSession session, final StompCommand command, final StompHeaders headers,
+			final byte[] payload, final Throwable exception) {
 		exception.printStackTrace();
 	}
 
@@ -38,6 +38,7 @@ public class MySessionHandler extends StompSessionHandlerAdapter {
 
 	@Override
 	public synchronized void handleFrame(final StompHeaders headers, final Object payload) {
+		System.out.println(payload);
 		Long start = ((Response) payload).getStart();
 		long end = System.currentTimeMillis() - start;
 		// System.out.println("Response time " + end);

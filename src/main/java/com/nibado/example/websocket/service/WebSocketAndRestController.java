@@ -15,14 +15,14 @@ public class WebSocketAndRestController {
 
 	Logger log = LoggerFactory.getLogger(WebSocketAndRestController.class);
 
-	@MessageMapping("/hello")
-	@SendTo("/topic/greetings")
+	@MessageMapping("/sum")
+	@SendTo("/topic/sum")
 	public Response greeting(final Request message) throws Exception {
 		// log.info("Received hello: {}", message.getStart());
 		return new Response(message.getStart());
 	}
 
-	@PostMapping("/helloSync")
+	@PostMapping("/sumSync")
 	@ResponseBody
 	public Response helloSync(@RequestBody final Request message) throws Exception {
 		// log.info("Received hello: {}", message.getStart());
